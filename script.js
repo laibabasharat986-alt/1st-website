@@ -1,33 +1,10 @@
-// 1. YouTube IFrame API Setup
-var player;
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-audio', {
-        height: '0',
-        width: '0',
-        videoId: 'https://youtu.be/PkhfKq9m0Uo?list=RDPkhfKq9m0Uo', // "Tujhe Sochta Hoon" Video ID
-        playerVars: {
-            'autoplay': 0,
-            'loop': 1,
-            'playlist': 'PkhfKq9m0Uo'
-        },
-        events: {
-            'onReady': onPlayerReady
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    // Player is ready
-}
-
-// YouTube API script load karein
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// 1. Audio Setup (.mp3 file ke liye)
+const songUrl = 'song.mp3.mp3'; // Aapki file ka naam yahan hona chahiye
+const audio = new Audio(songUrl);
+audio.loop = true;
 
 // 2. Countdown Setup
-const targetDate = new Date("February 14, 2026 00:00:00").getTime(); // Apni date set karein
+const targetDate = new Date("February 14, 2026 00:00:00").getTime();
 const timerElement = document.getElementById('timer');
 
 function updateCountdown() {
@@ -49,16 +26,14 @@ setInterval(updateCountdown, 1000);
 const blackBox = document.getElementById('black-box');
 const vault = document.getElementById('vault');
 const musicBtn = document.getElementById('music-btn');
-const correctPassword = "2630"; // Yahan apna secret code likhein
+const correctPassword = "2630"; // Aapka password
 
 blackBox.addEventListener('click', () => {
     const enteredPassword = prompt("Enter the secret code to open your surprise:");
     if (enteredPassword === correctPassword) {
         
-        // Gana start karein
-        if (player) {
-            player.playVideo();
-        }
+        // Music Start Karein
+        audio.play().catch(error => console.log("Audio play error:", error));
 
         blackBox.style.transform = 'scale(0.5)';
         setTimeout(() => {
@@ -83,14 +58,14 @@ blackBox.addEventListener('click', () => {
     }
 });
 
-// 4. Music Control Button
+// 4. Music Control Button (Play/Pause)
 musicBtn.addEventListener('click', () => {
-    if (player.getPlayerState() === 1) { // 1 means Playing
-        player.pauseVideo();
-        musicBtn.textContent = 'Play Music 🎶';
+    if (audio.paused) {
+        audio.play();
+        musicBtn.textContent = 'Music Playing... 🎶';
     } else {
-        player.playVideo();
-        musicBtn.textContent = 'Pause Music 🎶';
+        audio.pause();
+        musicBtn.textContent = 'Play Music 🎶';
     }
 });
 
