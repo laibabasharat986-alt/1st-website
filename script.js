@@ -1,5 +1,5 @@
 // 1. Audio Setup (.mp3 file ke liye)
-const songUrl = 'song.mp3.'; // Aapki file ka naam yahan hona chahiye
+const songUrl = 'song.mp3'; // Aapki file ka naam yahan hona chahiye
 const audio = new Audio(songUrl);
 audio.loop = true;
 
